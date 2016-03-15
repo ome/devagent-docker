@@ -1,15 +1,11 @@
 FROM openmicroscopy/omero-ssh-systemd
-
-MAINTAINER OME
+MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 ENV JENKINS_SWARM_VERSION 1.24
 ENV LANG en_US.UTF-8
 
-RUN yum install -y python-virtualenv
-
-RUN yum install -y http://download-aws.ej-technologies.com/exe4j/exe4j_linux_5_0_1.rpm
-
-RUN adduser -u 1000 omero
+RUN yum install -y python-virtualenv && \
+    yum install -y http://download-aws.ej-technologies.com/exe4j/exe4j_linux_5_0_1.rpm
 
 USER omero
 WORKDIR /tmp
