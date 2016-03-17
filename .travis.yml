@@ -1,0 +1,12 @@
+language: python
+env:
+  - JAVAVER="oracle17"
+  - JAVAVER="oracle18"
+  - JAVAVER="openjdk17"
+  - JAVAVER="openjdk18"
+  - JAVAVER="openjdk17-devel"
+  - JAVAVER="openjdk18-devel"
+services:
+  - docker
+script:
+    - docker build --build-arg JAVAVER=$JAVAVER -t devslave-c7-test .
