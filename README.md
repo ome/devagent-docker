@@ -1,7 +1,7 @@
-OMERO systemd Jenkins master and slave CI template
-=========================================
+OMERO systemd Jenkins slave
+===========================
 
-Docker image for OMERO devspace.
+Docker Jenkins slave image for OMERO devspace.
 
 ###  Docker
 
@@ -12,10 +12,15 @@ Docker image for OMERO devspace.
     with args
 
         make BUILDARGS="--build-arg JAVAVER=$JAVAVER --build-arg EXE4J_VERSION=$EXE4J_VERSION --build-arg JENKINS_SWARM_VERSION=$JENKINS_SWARM_VERSION"
+
 2. To run container
 
-        make start VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+    UNIX:
 
-    NOTE: if you are using docker-machine use --privileged
+        make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT" VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+
+    OSX:
+
+        make start PORTS="--privileged" ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT"
 
 The compose creates fully working Jenkins CI master and slave with full `sudo` rights. Jenkins swarm plugin is automatically started via systemd. Test Jenkins nodes via http://$(docker-machine ip dev):8080/
