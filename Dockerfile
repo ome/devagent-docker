@@ -20,9 +20,9 @@ RUN yum install -y initscripts \
 
 RUN chmod a+X /home/omero
 
-ARG JAVAVER=openjdk18
-ARG EXE4J_VERSION=5_0_1
-ARG JENKINS_SWARM_VERSION=2.0
+ARG JAVAVER=${JAVAVER:-openjdk18}
+ARG EXE4J_VERSION=${EXE4J_VERSION:-5_1}
+ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-2.0}
 
 # Download and run omero-install.
 ENV OMERO_INSTALL /tmp/omero-install/linux

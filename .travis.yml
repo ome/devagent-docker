@@ -5,7 +5,6 @@ language: java
 services:
   - docker
 
-
 env:
   - JAVAVER="oracle17"
   - JAVAVER="oracle18"
@@ -13,6 +12,7 @@ env:
   - JAVAVER="openjdk18"
   - JAVAVER="openjdk17-devel"
   - JAVAVER="openjdk18-devel"
+  - EXE4J_VERSION="5_0_1"
   - EXE4J_VERSION="5_1"
   - JENKINS_SWARM_VERSION="1.24"
   - JENKINS_SWARM_VERSION="2.0"
