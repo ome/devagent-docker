@@ -1,6 +1,8 @@
 #!/bin/bash
 # https://raw.githubusercontent.com/carlossg/jenkins-swarm-slave-docker/master/jenkins-slave.sh
 
+eval `(sudo cat /proc/1/environ; echo) | tr '\000' '\n' | while read line; do if [[ $line == JENKINS_PORT_8080_TCP_* ]] || [[ $line == SWARM_PARAMS* ]] ; then echo export $line; fi done`
+
 # if `docker run` first argument start with `-` the user is passing jenkins swarm launcher arguments
 if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
 
@@ -12,10 +14,16 @@ if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
     PARAMS="-master http://$JENKINS_PORT_8080_TCP_ADDR:$JENKINS_PORT_8080_TCP_PORT"
   fi
 
+  # if -master is not provided and using --link jenkins:jenkins
+  if [ ! -z "$SWARM_PARAMS" ]; then
+    PARAMS+=" $SWARM_PARAMS"
+  fi
+
   echo Running java $JAVA_OPTS -jar $JAR -fsroot $HOME $PARAMS "$@"
   exec java $JAVA_OPTS -jar $JAR -fsroot $HOME $PARAMS "$@"
 fi
 
 # As argument is not jenkins, assume user want to run his own process, for sample a `bash` shell to explore this image
 exec "$@"
+
 

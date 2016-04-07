@@ -1,16 +1,34 @@
-language: python
+sudo: required
+
+language: java
+
+services:
+  - docker
+
+
 env:
+  global:
+    - DOCKER_VERSION=1.10.1-0~trusty
   - JAVAVER="oracle17"
   - JAVAVER="oracle18"
   - JAVAVER="openjdk17"
   - JAVAVER="openjdk18"
   - JAVAVER="openjdk17-devel"
   - JAVAVER="openjdk18-devel"
-services:
-  - docker
+  - EXE4J_VERSION="5_1"
+  - JENKINS_SWARM_VERSION="1.24"
+  - JENKINS_SWARM_VERSION="2.0"
+
 before_install:
   - sudo apt-get update
-  - sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" docker-engine
+  - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install docker-engine=${DOCKER_VERSION}
+  - docker -v
+
+install:
+  - make BUILDARGS="--build-arg JAVAVER=$JAVAVER --build-arg EXE4J_VERSION=$EXE4J_VERSION --build-arg JENKINS_SWARM_VERSION=$JENKINS_SWARM_VERSION"
 
 script:
-    - docker build --build-arg JAVAVER=$JAVAVER -t devslave-c7-test .
+  - make start VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+  - docker inspect -f {{.State.Running}} devslave
+  - make stop
+  - make rm
