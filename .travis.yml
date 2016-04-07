@@ -7,8 +7,6 @@ services:
 
 
 env:
-  global:
-    - DOCKER_VERSION=1.10.1-0~trusty
   - JAVAVER="oracle17"
   - JAVAVER="oracle18"
   - JAVAVER="openjdk17"
@@ -21,7 +19,7 @@ env:
 
 before_install:
   - sudo apt-get update
-  - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install docker-engine=${DOCKER_VERSION}
+  - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install docker-engine
   - docker -v
 
 install:
