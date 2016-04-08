@@ -1,7 +1,7 @@
 NS = openmicroscopy
-VERSION ?= latest
+VERSION ?= local
 
-REPO = devslave-c7-docker
+REPO = devslave-c7
 NAME = devslave
 
 build:

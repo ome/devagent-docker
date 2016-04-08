@@ -3,7 +3,6 @@ FROM openmicroscopy/omero-ssh-systemd
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 ENV LANG en_US.UTF-8
-ENV JENKINS_LABEL /etc/alternatives/java_sdk
 ENV JENKINS_MODE exclusive
 
 ENV SWARM_PARAMS "'-labels slave -executors 1'"
