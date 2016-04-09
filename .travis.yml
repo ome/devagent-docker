@@ -22,8 +22,16 @@ install:
   - make BUILDARGS="--build-arg JAVAVER=$JAVAVER"
 
 script:
-  - make start VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+  - docker run -d --name jenkins jenkins
+  - docker inspect -f {{.State.Running}} jenkins
+  - while ! docker logs jenkins 2>&1 | grep "Jenkins is fully up and running" ; do sleep 10; done
+  - JENKINS_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' jenkins`
+  - JENKINS_PORT=50000
+  - make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT" VOLUMES="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
   - docker inspect -f {{.State.Running}} devslave
+  - SLAVE_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' devslave`
+  - while ! docker logs jenkins 2>&1 | grep "from /${SLAVE_ADDR}" ; do sleep 10; done
   - docker exec -it devslave /bin/bash -c "service jenkins status -l"
+  - docker logs jenkins
   - make stop
   - make rm

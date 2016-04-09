@@ -44,5 +44,3 @@ ADD ./jenkins-slave.sh /tmp/jenkins-slave.sh
 RUN chmod +x /tmp/jenkins-slave.sh
 ADD ./jenkins.service /etc/systemd/system/jenkins.service
 RUN systemctl enable jenkins.service
-
-#ENTRYPOINT ["/tmp/jenkins-slave.sh"]
