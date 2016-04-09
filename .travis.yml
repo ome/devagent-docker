@@ -24,5 +24,6 @@ install:
 script:
   - make start VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
   - docker inspect -f {{.State.Running}} devslave
+  - docker exec -it devslave /bin/bash -c "service jenkins status -l"
   - make stop
   - make rm
