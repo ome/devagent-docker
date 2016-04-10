@@ -30,6 +30,7 @@ RUN yum install -y git \
     && yum clean all
 
 RUN git clone https://github.com/ome/omero-install.git /tmp/omero-install
+RUN bash $OMERO_INSTALL/step01_centos7_init.sh
 RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
 
 RUN yum install -y http://download-keycdn.ej-technologies.com/exe4j/exe4j_linux_$EXE4J_VERSION.rpm \
