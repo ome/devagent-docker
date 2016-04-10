@@ -23,4 +23,4 @@ Docker Jenkins slave image for OMERO devspace.
 
         make start PORTS="--privileged" ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT"
 
-The compose creates fully working Jenkins CI master and slave with full `sudo` rights. Jenkins swarm plugin is automatically started via systemd. Test Jenkins nodes via http://$(docker-machine ip dev):8080/
+The compose creates fully working Jenkins CI master and slave with full `sudo` rights. Jenkins swarm plugin is automatically started via systemd.
