@@ -1,4 +1,10 @@
-language: python
+sudo: required
+
+language: java
+
+services:
+  - docker
+
 env:
   - JAVAVER="oracle17"
   - JAVAVER="oracle18"
@@ -6,11 +12,26 @@ env:
   - JAVAVER="openjdk18"
   - JAVAVER="openjdk17-devel"
   - JAVAVER="openjdk18-devel"
-services:
-  - docker
+
 before_install:
   - sudo apt-get update
-  - sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" docker-engine
+  - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install docker-engine
+  - docker -v
+
+install:
+  - make BUILDARGS="--build-arg JAVAVER=$JAVAVER"
 
 script:
-    - docker build --build-arg JAVAVER=$JAVAVER -t devslave-c7-test .
+  - docker run -d --name jenkins jenkins
+  - docker inspect -f {{.State.Running}} jenkins
+  - d=10; while ! docker logs jenkins 2>&1 | grep "Jenkins is fully up and running" ; do sleep 10; d=$[$d -1]; if [ $d -lt 0 ]; then exit 1; fi; done
+  - JENKINS_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' jenkins`
+  - JENKINS_PORT=50000
+  - make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT" VOLUMES="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+  - docker inspect -f {{.State.Running}} devslave
+  - SLAVE_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' devslave`
+  - d=10; while ! docker logs jenkins 2>&1 | grep "from /${SLAVE_ADDR}" ; do sleep 10; d=$[$d -1]; if [ $d -lt 0 ]; then exit 1; fi; done
+  - docker exec -it devslave /bin/bash -c "service jenkins status -l"
+  - docker logs jenkins
+  - make stop
+  - make rm
