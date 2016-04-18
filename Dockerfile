@@ -1,4 +1,4 @@
-FROM openmicroscopy/omero-ssh-systemd
+FROM openmicroscopy/omero-ssh-c7:0.1.0
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
