@@ -1,4 +1,4 @@
-FROM openmicroscopy/omero-ssh-systemd
+FROM openmicroscopy/omero-ssh-c7:0.1.0
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
@@ -7,10 +7,9 @@ ENV JENKINS_MODE exclusive
 
 ENV SWARM_PARAMS "'-labels slave -executors 1'"
 
-# To avoid error: sudo: sorry, you must have a tty to run sudo
-RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
-
-#RUN usermod -u $UID omero
+# Change user id to fix permissions issues
+ARG USER_ID=1000
+RUN usermod -u $USER_ID omero
 
 WORKDIR /home/omero
 
