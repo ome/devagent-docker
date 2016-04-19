@@ -17,7 +17,7 @@ Docker Jenkins slave image for OMERO devspace.
 
     UNIX:
 
-        make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT" VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+        make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT"
 
     OSX:
 
