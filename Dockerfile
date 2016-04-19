@@ -1,4 +1,4 @@
-FROM centos:centos7
+FROM openmicroscopy/omero-ssh
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
@@ -9,8 +9,7 @@ ENV SLAVE_PARAMS "-labels slave -executors 1"
 
 # Change user id to fix permissions issues
 ARG USER_ID=1000
-RUN adduser -u $USER_ID omero
-RUN chmod a+X /home/omero
+RUN usermod -u $USER_ID omero
 
 # Build args
 ARG JAVAVER=${JAVAVER:-openjdk18}
