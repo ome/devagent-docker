@@ -6,7 +6,7 @@
 if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
 
   # jenkins swarm slave
-  JAR=`ls -1 /home/omero/swarm-client-*.jar | tail -n 1`
+  JAR=`ls -1 /tmp/swarm-client-*.jar | tail -n 1`
 
   PARAMS=""
   if [ ! -z "$JENKINS_USERNAME" ]; then
@@ -31,16 +31,10 @@ if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
   fi
   
   if [ ! -z "$SLAVE_NAME" ]; then
-      PARAMS="$PARAMS -name '$SLAVE_NAME'"
+      PARAMS="$PARAMS -name $SLAVE_NAME"
   fi
   if [ ! -z "$SLAVE_EXECUTORS" ]; then
-      PARAMS="$PARAMS -executors '$SLAVE_EXECUTORS'"
-  fi
-  if [ ! -z "$SLAVE_LABELS" ]; then
-      PARAMS="$PARAMS -labels '$SLAVE_LABELS'"
-  fi
-  if [ ! -z "$SLAVE_MODE" ]; then
-      PARAMS="$PARAMS -mode '$SLAVE_MODE'"
+      PARAMS="$PARAMS -executors $SLAVE_EXECUTORS"
   fi
 
   # if -master is not provided and using --link jenkins:jenkins

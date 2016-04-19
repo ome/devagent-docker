@@ -9,7 +9,7 @@ if [[ "darwin" == "${OSTYPE//[0-9.]/}" ]]; then
     PRIVILEGED="--privileged"
 fi
 
-docker run -d $PRIVILEGED --name jenkins jenkins
+docker run -d $PRIVILEGED --name jenkins jenkins:1.642.4
 docker inspect -f {{.State.Running}} jenkins
 
 d=10
@@ -24,10 +24,9 @@ done
 JENKINS_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' jenkins`
 JENKINS_PORT=50000
 ENV="-e JENKINS_PORT_8080_TCP_ADDR=${JENKINS_ADDR} -e JENKINS_PORT_8080_TCP_PORT=${JENKINS_PORT}"
-if [[ "darwin" != "${OSTYPE//[0-9.]/}" ]]; then
-  VOLUMES="-v /home/travis/build/openmicroscopy/devslave-c7-docker/testperm:/home/omero/testperm"
-fi
-make start PORTS=$PRIVILEGED ENV="$ENV" VOLUMES=$VOLUMES
+MYPATH=`pwd`
+VOLUMES="-v $MYPATH:/home/omero"
+make start PORTS=$PRIVILEGED ENV="$ENV" VOLUMES="$VOLUMES"
 
 docker inspect -f {{.State.Running}} devslave
 
@@ -42,8 +41,11 @@ do sleep 10
   fi
 done
 
-docker exec -it devslave /bin/bash -c "su - omero -c \"mkdir -p /home/omero/testperm; echo 'this is test' > /home/omero/testperm/file \""
-docker exec -it devslave /bin/bash -c "cat /home/omero/testperm/file"
+docker exec -it devslave /bin/bash -c "sudo -u omero touch /home/omero/file"
+if [[ "$(`ls -ld f2 | awk '{print $3}'`)" != "$(whoami)" ]]; then
+  exit 1
+fi
+ls -al ./file
 
 docker logs jenkins
 
