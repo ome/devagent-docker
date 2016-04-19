@@ -2,14 +2,14 @@
 
 set -e -u -x
 
-PRIVILIGED=""
+PRIVILEGED=""
 VOLUMES=""
 # start docker container
 if [[ "darwin" == "${OSTYPE//[0-9.]/}" ]]; then
-    PRIVILIGED="--privileged"
+    PRIVILEGED="--privileged"
 fi
 
-docker run -d $PRIVILIGED --name jenkins jenkins
+docker run -d $PRIVILEGED --name jenkins jenkins
 docker inspect -f {{.State.Running}} jenkins
 
 d=10
@@ -27,7 +27,7 @@ ENV="-e JENKINS_PORT_8080_TCP_ADDR=${JENKINS_ADDR} -e JENKINS_PORT_8080_TCP_PORT
 if [[ "darwin" != "${OSTYPE//[0-9.]/}" ]]; then
   VOLUMES="-v /home/travis/build/openmicroscopy/devslave-c7-docker/testperm:/home/omero/testperm"
 fi
-make start PORTS=$PRIVILIGED ENV="$ENV" VOLUMES=$VOLUMES
+make start PORTS=$PRIVILEGED ENV="$ENV" VOLUMES=$VOLUMES
 
 docker inspect -f {{.State.Running}} devslave
 
