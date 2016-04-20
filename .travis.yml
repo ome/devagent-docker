@@ -19,7 +19,7 @@ before_install:
   - docker -v
 
 install:
-  - make BUILDARGS="--build-arg JAVAVER=$JAVAVER"
+  - make BUILDARGS="--build-arg JAVAVER=$JAVAVER --build-arg USER_ID=$UID"
 
 script:
   - ./runtest.sh

@@ -41,11 +41,12 @@ do sleep 10
   fi
 done
 
+# check permissions
 docker exec -it devslave /bin/bash -c "sudo -u omero touch /home/omero/file"
-if [[ "$(`ls -ld f2 | awk '{print $3}'`)" != "$(whoami)" ]]; then
+if [ $(ls -ld file | awk '{print $3}') != $(whoami) ]; then
   exit 1
 fi
-ls -al ./file
+ls -al file
 
 docker logs jenkins
 
