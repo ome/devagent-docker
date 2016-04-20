@@ -11,7 +11,14 @@ Docker Jenkins slave image for OMERO devspace.
 
     with args
 
-        make BUILDARGS="--build-arg JAVAVER=$JAVAVER --build-arg EXE4J_VERSION=$EXE4J_VERSION --build-arg JENKINS_SWARM_VERSION=$JENKINS_SWARM_VERSION"
+        make BUILDARGS="--build-arg USER_ID=$UID"
+
+    all available build-arg:
+
+        USER_ID
+        JAVAVER
+        EXE4J_VERSION
+        JENKINS_SWARM_VERSION
 
 2. To run container
 
