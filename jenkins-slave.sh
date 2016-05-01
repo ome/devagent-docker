@@ -16,11 +16,6 @@ if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
     PARAMS="$PARAMS -password $JENKINS_PASSWORD"
   fi
 
-  # if -master is not provided and using --link jenkins:jenkins
-  if [[ "$@" != *"-master "* ]] && [ ! -z "$JENKINS_PORT_8080_TCP_ADDR" ]; then
-    PARAMS="$PARAMS -master http://$JENKINS_PORT_8080_TCP_ADDR:$JENKINS_PORT_8080_TCP_PORT"
-  fi
-  
   if [ ! -z "$JENKINS_MASTER" ]; then
     PARAMS="$PARAMS -master $JENKINS_MASTER"
   elif [ ! -z "$JENKINS_PORT_8080_TCP_ADDR" ]; then
