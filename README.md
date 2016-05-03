@@ -11,13 +11,20 @@ Docker Jenkins slave image for OMERO devspace.
 
     with args
 
-        make BUILDARGS="--build-arg JAVAVER=$JAVAVER --build-arg EXE4J_VERSION=$EXE4J_VERSION --build-arg JENKINS_SWARM_VERSION=$JENKINS_SWARM_VERSION"
+        make BUILDARGS="--build-arg USER_ID=$UID"
+
+    all available build-arg:
+
+        USER_ID
+        JAVAVER
+        EXE4J_VERSION
+        JENKINS_SWARM_VERSION
 
 2. To run container
 
     UNIX:
 
-        make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT" VOLUME="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run"
+        make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT"
 
     OSX:
 

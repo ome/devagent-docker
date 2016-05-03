@@ -19,20 +19,7 @@ before_install:
   - docker -v
 
 install:
-  - make BUILDARGS="--build-arg JAVAVER=$JAVAVER"
+  - make BUILDARGS="--build-arg JAVAVER=$JAVAVER --build-arg USER_ID=$UID"
 
 script:
-  - docker run -d --name jenkins jenkins
-  - docker inspect -f {{.State.Running}} jenkins
-  - d=10; while ! docker logs jenkins 2>&1 | grep "Jenkins is fully up and running" ; do sleep 10; d=$[$d -1]; if [ $d -lt 0 ]; then exit 1; fi; done
-  - JENKINS_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' jenkins`
-  - JENKINS_PORT=50000
-  - make start ENV="-e JENKINS_PORT_8080_TCP_ADDR=$JENKINS_ADDR -e JENKINS_PORT_8080_TCP_PORT=$JENKINS_PORT" VOLUMES="-v /sys/fs/cgroup:/sys/fs/cgroup:ro -v /run -v /home/travis/build/openmicroscopy/devslave-c7-docker/testperm:/home/omero/testperm"
-  - docker inspect -f {{.State.Running}} devslave
-  - SLAVE_ADDR=`docker inspect --format '{{ .NetworkSettings.IPAddress }}' devslave`
-  - d=10; while ! docker logs jenkins 2>&1 | grep "from /${SLAVE_ADDR}" ; do sleep 10; d=$[$d -1]; if [ $d -lt 0 ]; then exit 1; fi; done
-  - docker exec -it devslave /bin/bash -c "service jenkins status -l"
-  - docker exec -it devslave /bin/bash -c "su - omero -c \"echo \"this is test\" > ~/testperm/file \""
-  - docker logs jenkins
-  - make stop
-  - make rm
+  - ./runtest.sh
