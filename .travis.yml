@@ -12,6 +12,7 @@ env:
   - JAVAVER="openjdk18"
   - JAVAVER="openjdk17-devel"
   - JAVAVER="openjdk18-devel"
+  - JAVAVER="oracle19"
 
 before_install:
   - sudo apt-get update
