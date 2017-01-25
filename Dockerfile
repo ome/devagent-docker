@@ -7,7 +7,8 @@ ENV SLAVE_PARAMS "-labels slave"
 ENV SLAVE_EXECUTORS "1"
 
 # Build args
-ARG JAVAVER=${JAVAVER:-openjdk18}
+#ARG JAVAVER=${JAVAVER:-openjdk18}
+ARG JAVAVER=${JAVAVER:-oracle19}
 
 # Download and run omero-install.
 ENV OMERO_INSTALL /tmp/omero-install/linux
@@ -16,7 +17,8 @@ RUN yum install -y git \
     && yum clean all
 
 ARG TAG=v5.3.0-m7
-RUN git clone -b $TAG https://github.com/ome/omero-install.git /tmp/omero-install
+#RUN git clone -b $TAG https://github.com/ome/omero-install.git /tmp/omero-install
+RUN git clone -b java9-latest https://github.com/jburel/omero-install.git /tmp/omero-install
 RUN bash $OMERO_INSTALL/step01_centos7_init.sh
 RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
 
