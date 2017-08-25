@@ -15,7 +15,7 @@ ENV OMERO_INSTALL /tmp/omero-install/linux
 RUN yum install -y git \
     && yum clean all
 
-ARG TAG=v5.3.0-m7
+ARG TAG=v5.3.3
 RUN git clone -b $TAG https://github.com/ome/omero-install.git /tmp/omero-install
 RUN bash $OMERO_INSTALL/step01_centos7_init.sh
 RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
