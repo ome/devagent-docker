@@ -28,7 +28,7 @@ RUN yum install -y http://download-keycdn.ej-technologies.com/exe4j/exe4j_linux_
 ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.14}
 
 USER omero
-RUN curl --create-dirs -sSLo /tmp/swarm-client-$JENKINS_SWARM_VERSION-jar-with-dependencies.jar https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client.jar
+RUN curl --create-dirs -sSLo /tmp/swarm-client-$JENKINS_SWARM_VERSION.jar https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client.jar
 
 USER root
 

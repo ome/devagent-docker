@@ -6,7 +6,7 @@
 if [[ $# -lt 1 ]] || [[ "$1" == "-"* ]]; then
 
   # jenkins swarm slave
-  JAR=`ls -1 /tmp/swarm-client.jar | tail -n 1`
+  JAR=`ls -1 /tmp/swarm-client-*.jar | tail -n 1`
 
   PARAMS=""
   if [ ! -z "$JENKINS_USERNAME" ]; then
