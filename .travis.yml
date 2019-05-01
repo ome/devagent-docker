@@ -6,8 +6,8 @@ services:
   - docker
 
 env:
-  - JAVAVER="openjdk18"
-  - JAVAVER="openjdk18-devel"
+  - JAVAVER="openjdk1.8"
+  - JAVAVER="openjdk1.8-devel"
 
 before_install:
   - docker -v
