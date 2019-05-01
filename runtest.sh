@@ -1,5 +1,14 @@
 #!/bin/bash
 
+JENKINS_CONTAINER=${JENKINS_CONTAINER:-jenkins}
+
+
+cleanup() {
+   docker rm -f ${JENKINS_CONTAINER}
+}
+
+trap cleanup EXIT
+
 set -e -u -x
 
 PRIVILEGED=""
@@ -53,5 +62,3 @@ docker logs jenkins
 # CLEANUP
 make stop
 make rm
-docker stop jenkins
-docker rm jenkins
