@@ -7,7 +7,7 @@ ENV SLAVE_PARAMS "-labels slave"
 ENV SLAVE_EXECUTORS "1"
 
 # Build args
-ARG JAVAVER=${JAVAVER:-openjdk18}
+ARG JAVAVER=${JAVAVER:-openjdk1.8}
 
 # Download and run omero-install.
 ENV OMERO_INSTALL /tmp/omero-install/linux
