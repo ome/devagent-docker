@@ -22,7 +22,7 @@ RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
 
 ARG EXE4J_VERSION=${EXE4J_VERSION:-6_0}
 
-RUN yum install -y http://download-keycdn.ej-technologies.com/exe4j/exe4j_linux_$EXE4J_VERSION.rpm \
+RUN yum install -y https://download-gcdn.ej-technologies.com/exe4j/exe4j_linux_$EXE4J_VERSION.rpm \
     && yum clean all
 
 ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.14}
