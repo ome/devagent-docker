@@ -51,7 +51,7 @@ do sleep 10
 done
 
 # check permissions
-docker exec -it devslave /bin/bash -c "sudo -u omero touch /home/omero/file"
+docker exec devslave /bin/bash -c "sudo -u omero touch /home/omero/file"
 if [ $(ls -ld file | awk '{print $3}') != $(whoami) ]; then
   exit 1
 fi
