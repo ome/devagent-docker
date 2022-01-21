@@ -20,10 +20,6 @@ RUN git clone -b $TAG https://github.com/ome/omero-install.git /tmp/omero-instal
 RUN bash $OMERO_INSTALL/step01_centos7_init.sh
 RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
 
-ARG EXE4J_VERSION=${EXE4J_VERSION:-6_0}
-
-RUN yum install -y https://download-gcdn.ej-technologies.com/exe4j/exe4j_linux_$EXE4J_VERSION.rpm \
-    && yum clean all
 
 ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.29}
 
