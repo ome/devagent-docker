@@ -15,17 +15,13 @@ ENV OMERO_INSTALL /tmp/omero-install/linux
 RUN yum install -y git \
     && yum clean all
 
-ARG TAG=v5.5.0-rc2
+ARG TAG=v5.6.3
 RUN git clone -b $TAG https://github.com/ome/omero-install.git /tmp/omero-install
 RUN bash $OMERO_INSTALL/step01_centos7_init.sh
 RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
 
-ARG EXE4J_VERSION=${EXE4J_VERSION:-6_0}
 
-RUN yum install -y https://download-gcdn.ej-technologies.com/exe4j/exe4j_linux_$EXE4J_VERSION.rpm \
-    && yum clean all
-
-ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.14}
+ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.29}
 
 USER omero
 RUN curl --create-dirs -sSLo /tmp/swarm-client-$JENKINS_SWARM_VERSION.jar https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION.jar
