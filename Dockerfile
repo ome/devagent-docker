@@ -12,7 +12,7 @@ ARG JAVAVER=${JAVAVER:-openjdk1.8}
 # Download and run omero-install.
 ENV OMERO_INSTALL /tmp/omero-install/linux
 
-RUN yum install -y git \
+RUN yum install -y git ca-certificates \
     && yum clean all
 
 ARG TAG=v5.6.3
