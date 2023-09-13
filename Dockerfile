@@ -2,13 +2,16 @@ FROM jburel/omero-ssh-daemon-c7-docker:0.2.1
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
+# Build args
+ARG JAVAVER=${JAVAVER:-java-11-openjdk}
 ENV LANG en_US.UTF-8
 ENV SLAVE_PARAMS "-labels slave"
 ENV SLAVE_EXECUTORS "1"
 
-RUN yum install -y git ca-certificates \
-    && yum clean all
+RUN dnf install -y git ca-certificates \
+    && dnf clean all
 
+RUN dnf install -y ${JAVAVER}
 
 ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.29}
 
