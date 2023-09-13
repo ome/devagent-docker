@@ -18,7 +18,7 @@ if [[ "darwin" == "${OSTYPE//[0-9.]/}" ]]; then
     PRIVILEGED="--privileged"
 fi
 
-docker run -d $PRIVILEGED --name jenkins jenkins:1.651.1
+docker run -d $PRIVILEGED --name jenkins jenkins/jenkins:2.375.1-lts
 docker inspect -f {{.State.Running}} jenkins
 
 d=10
