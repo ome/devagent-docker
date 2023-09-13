@@ -12,8 +12,8 @@ jobs:
     strategy:
       matrix:
         java:
-          - 'openjdk1.8'
-          - 'openjdk1.8-devel'
+          - 'openjdk11'
+          - 'openjdk11-devel'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
