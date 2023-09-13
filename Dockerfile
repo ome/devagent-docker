@@ -1,4 +1,4 @@
-FROM jburel/omero-ssh-daemon-c7-docker:0.2.1
+FROM jburel/omero-ssh-daemon-c7-docker:0.2.2
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
@@ -12,6 +12,8 @@ RUN dnf install -y git ca-certificates \
     && dnf clean all
 
 RUN dnf install -y ${JAVAVER}
+RUN dnf install -y unzip wget bc
+
 
 ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.29}
 
