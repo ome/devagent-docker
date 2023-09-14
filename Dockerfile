@@ -4,10 +4,12 @@ MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 # Build args
 ARG JAVAVER=${JAVAVER:-java-11-openjdk-devel}
-ENV LANG en_US.UTF-8
 ENV SLAVE_PARAMS "-labels slave"
 ENV SLAVE_EXECUTORS "1"
 
+RUN dnf install -y langpacks-en glibc-all-langpacks
+
+ENV LANG en_US.UTF-8
 RUN dnf install -y git ca-certificates \
     && dnf clean all
 
