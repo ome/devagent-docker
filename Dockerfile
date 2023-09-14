@@ -10,6 +10,9 @@ ENV SLAVE_EXECUTORS "1"
 RUN dnf install -y langpacks-en glibc-all-langpacks
 
 ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.en
+ENV LC_ALL en_US.UTF-8
+
 RUN dnf install -y git ca-certificates \
     && dnf clean all
 
