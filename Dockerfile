@@ -3,7 +3,7 @@ FROM jburel/omero-ssh-daemon-c7-docker:0.2.2
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
 # Build args
-ARG JAVAVER=${JAVAVER:-java-11-openjdk}
+ARG JAVAVER=${JAVAVER:-java-11-openjdk-devel}
 ENV LANG en_US.UTF-8
 ENV SLAVE_PARAMS "-labels slave"
 ENV SLAVE_EXECUTORS "1"
