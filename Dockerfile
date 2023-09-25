@@ -1,4 +1,4 @@
-FROM jburel/omero-ssh-daemon-c7-docker:0.2.2
+FROM jburel/omero-ssh-daemon-c7-docker:0.2.3
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
