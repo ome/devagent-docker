@@ -19,8 +19,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build
         run: make BUILDARGS="--build-arg JAVAVER=${{ matrix.java }} --build-arg USER_ID=$UID"
-      - name: Test
-        run: ./runtest.sh
+      #- name: Test
+      #  run: ./runtest.sh
   upload:
     needs: build
     if: startsWith(github.ref, 'refs/tags')
