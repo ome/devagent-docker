@@ -1,4 +1,4 @@
-FROM ome/omero-ssh-daemon:0.2.0
+FROM openmicroscopy/omero-ssh-daemon:0.2.0
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
