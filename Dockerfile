@@ -1,27 +1,27 @@
-FROM openmicroscopy/omero-ssh-daemon-c7:0.1.1-1
+FROM openmicroscopy/omero-ssh-daemon:0.2.0
 
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
-ENV LANG en_US.UTF-8
+# Build args
+ARG JAVAVER=${JAVAVER:-java-11-openjdk-devel}
 ENV SLAVE_PARAMS "-labels slave"
 ENV SLAVE_EXECUTORS "1"
 
-# Build args
-ARG JAVAVER=${JAVAVER:-openjdk1.8}
+RUN dnf install -y langpacks-en glibc-all-langpacks
 
-# Download and run omero-install.
-ENV OMERO_INSTALL /tmp/omero-install/linux
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.en
+ENV LC_ALL en_US.UTF-8
 
-RUN yum install -y git ca-certificates \
-    && yum clean all
+RUN dnf install -y git ca-certificates \
+    && dnf clean all
 
-ARG TAG=v5.6.4
-RUN git clone -b $TAG https://github.com/ome/omero-install.git /tmp/omero-install
-RUN bash $OMERO_INSTALL/step01_centos7_init.sh
-RUN bash $OMERO_INSTALL/step01_centos_java_deps.sh
+RUN dnf install -y ${JAVAVER}
+RUN dnf install -y unzip wget bc
 
 
-ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.29}
+ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.44}
+
 
 USER omero
 RUN curl --create-dirs -sSLo /tmp/swarm-client-$JENKINS_SWARM_VERSION.jar https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/$JENKINS_SWARM_VERSION/swarm-client-$JENKINS_SWARM_VERSION.jar
