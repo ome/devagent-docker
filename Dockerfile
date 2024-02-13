@@ -17,7 +17,7 @@ RUN dnf install -y git ca-certificates \
     && dnf clean all
 
 RUN dnf install -y ${JAVAVER}
-RUN dnf install -y unzip wget bc
+RUN dnf install -y unzip wget bc procps
 
 
 ARG JENKINS_SWARM_VERSION=${JENKINS_SWARM_VERSION:-3.44}
