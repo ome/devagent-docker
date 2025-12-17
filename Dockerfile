@@ -9,6 +9,9 @@ ENV SLAVE_EXECUTORS "1"
 
 RUN dnf install -y langpacks-en glibc-all-langpacks
 
+# install various Java versions
+RUN dnf install -y java-21-openjdk-devel java-17-openjdk-devel
+
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.en
 ENV LC_ALL en_US.UTF-8
